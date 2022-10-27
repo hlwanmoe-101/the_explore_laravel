@@ -15,36 +15,39 @@
                         {{date("d-M-Y")}}
                     </p>
                 </div>
-                <form action="{{route('post.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('post.store')}}" method="post" id="postForm" enctype="multipart/form-data">
                     @csrf
                     <div class="form-floating mb-4">
-                        <input type="text" name="title" class="form-control @error('title') is-invalid @enderror " id="postTitle" placeholder="no need">
+                        <input type="text" name="title" value="{{old('title')}}" class="form-control @error('title') is-invalid @enderror " id="postTitle" placeholder="no need">
                         <label for="postTitle">Post Title</label>
                         @error('title')
                         <p class="invalid-feedback">{{$message}}</p>
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <img src="{{asset('placeholder.jpeg')}}" id="coverPreview" class="cover-img w-100 @error('cover') is-invalid @enderror rounded" alt="">
-                        <input type="file" class="d-none" name="cover" id="cover">
+                        <img src="{{asset('placeholder.jpeg')}}" id="coverPreview" class="cover-img w-100 @error('cover') border border-danger is-invalid @enderror rounded" alt="">
+                        <input type="file" class="d-none" name="cover" accept="image/jpeg,image/png" id="cover">
                         @error('cover')
                         <p class="invalid-feedback">{{$message}}</p>
                         @enderror
                     </div>
                     <div class="form-floating mb-4">
-                        <textarea type="text" name="description" class="form-control @error('description') is-invalid @enderror" id="postDescription" placeholder="no need" style="height: 400px"></textarea>
+                        <textarea type="text" name="description" class="form-control @error('description') is-invalid @enderror" id="postDescription" placeholder="no need" style="height: 400px">
+                            {{old('description')}}
+                        </textarea>
                         <label for="postDescription">Share Your Experience</label>
                         @error('description')
                         <p class="invalid-feedback">{{$message}}</p>
                         @enderror
                     </div>
-                    <div class="text-center mb-4">
-                        <button class="btn btn-lg btn-primary">
-                            <i class="fas fa-message"></i>
-                           Create Post
-                        </button>
-                    </div>
+
                 </form>
+                <div class="text-center mb-4">
+                    <button class="btn btn-lg btn-primary" form="postForm">
+                        <i class="fas fa-message"></i>
+                        Create Post
+                    </button>
+                </div>
             </div>
         </div>
     </div>
