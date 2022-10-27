@@ -4,7 +4,6 @@ try {
     require('bootstrap');
     window.VenoBox=require('venobox');
     window.Swal=require('sweetalert2');
-    window.ScrollReveal=require('scrollreveal');
 } catch (e) {}
 
 /**

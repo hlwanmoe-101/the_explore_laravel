@@ -38,7 +38,7 @@
 
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{route('edit-profile')}}">Edit Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Change Password</a></li>
+                            <li><a class="dropdown-item" href="{{route('edit-password')}}">Change Password</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#"
                                    onclick="event.preventDefault();
@@ -58,7 +58,9 @@
 
 @yield('content')
 
-<div class="py-5 bg-primary"></div>
+<div class="py-4 text-light text-center bg-primary">
+    &copy; {{date("Y")}} Hlwan. All rights Reversed.
+</div>
 <script src="{{asset('js/app.js')}}"></script>
 @stack('script')
 </body>

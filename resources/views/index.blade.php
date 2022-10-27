@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-10 col-xl-8">
+            <div class="col-lg-10 col-xl-8 min-vh-100">
                 @auth
                     <div class="border rounded-3 mb-4 p-4 d-flex justify-content-between align-items-center">
                         <h4 class="text-black-50 fw-bold">
@@ -51,7 +51,9 @@
                     </div>
                     @endforeach
                 </div>
-
+                <div class="d-flex justify-content-center">
+                    {{$posts->links()}}
+                </div>
             </div>
         </div>
     </div>

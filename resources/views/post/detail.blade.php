@@ -63,7 +63,15 @@
                                                 </p>
                                             </div>
                                             @empty
-{{--                                            <p class="text-center">There is no Comments</p>--}}
+                                            <p class="text-center">
+                                                There is no Comments,
+                                                @auth
+                                                    Start comment now!
+                                                    @endauth
+                                                @guest
+                                                   Please, <a href="{{route('login')}}">Login</a> to comment
+                                                    @endguest
+                                            </p>
                                         @endforelse
                                     </div>
                                     @auth

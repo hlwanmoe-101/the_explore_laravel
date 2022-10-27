@@ -10846,6 +10846,7 @@ textarea.form-control-lg {
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
+  border: 1.5px solid #457b9d;
 }
 
 .cover-img {
