@@ -53,7 +53,7 @@ class HomeController extends Controller
         $request->validate([
             "currentPassword"=> "required|min:8",
             "newPassword"=> "required|min:8",
-            "confirmPassword"=> "required|min:8|same:newPassword"
+            "confirmPassword"=> "required|min:8|same:newPassword" 
         ]);
         if(!Hash::check($request->currentPassword,auth()->user()->password)){
             return redirect()->back()->withErrors(["currentPassword"=>"no"]);
