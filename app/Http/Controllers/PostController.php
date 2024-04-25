@@ -79,7 +79,7 @@ class PostController extends Controller implements ShouldQueue
 
         //mail send
 //        Mail::to('dmoez24057@gmail.com')->send(new PostMailAws($post));
-        Mail::to('dmoez24057@gmail.com')->later(now()->addSecond(5),new PostMailAws($post));
+        //Mail::to('dmoez24057@gmail.com')->later(now()->addSecond(5),new PostMailAws($post));
 
         return redirect()->route('index');
 
