@@ -29,6 +29,6 @@ Auth::routes();
     Route::post('update-profile',[HomeController::class,'updateProfile'])->name('update-profile');
     Route::get('edit-password',[HomeController::class,'editPassword'])->name('edit-password');
     Route::post('change-password',[HomeController::class,'changePassword'])->name('change-password');
-//});
+//});//
 
 
