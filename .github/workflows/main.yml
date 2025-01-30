@@ -1,11 +1,13 @@
 name: Deploy Laravel App
 
-   on:
-     push:
-       branches:
-         - master  # Trigger on pushes to the main branch
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
-   jobs:
+
+jobs:
      deploy:
        runs-on: ubuntu-latest
 
