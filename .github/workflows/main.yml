@@ -28,7 +28,7 @@ name: Deploy Laravel App
            username: ${{ secrets.SSH_USER }}
            key: ${{ secrets.SSH_KEY }}
            source: "./"
-           target: "/var/www/laravel"
+           target: "/var/www/your-project"
 
        - name: Execute remote commands
          uses: appleboy/ssh-action@master
@@ -37,6 +37,6 @@ name: Deploy Laravel App
            username: ${{ secrets.SSH_USER }}
            key: ${{ secrets.SSH_KEY }}
            script: |
-             cd /var/www/laravel
+             cd /var/www/your-project
              php artisan migrate --force
              php artisan config:cache
