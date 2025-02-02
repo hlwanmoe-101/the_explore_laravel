@@ -10,12 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout code
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install Composer Dependencies
-      run: composer install --no-dev --optimize-autoloader
-
+    # Step 2: Upload files to EC2
     - name: Upload to EC2
       uses: appleboy/scp-action@master
       with:
@@ -25,7 +24,8 @@ jobs:
         source: "."
         target: "/var/www/laravel"
 
-    - name: Run Migrations
+    # Step 3: Run commands on EC2
+    - name: Run Commands on EC2
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.EC2_HOST }}
@@ -33,16 +33,25 @@ jobs:
         key: ${{ secrets.AWS_SSH_KEY }}
         script: |
           cd /var/www/laravel
+
+          # Install Composer dependencies
+          composer install --no-dev --optimize-autoloader
+
+          # Copy .env file
+          cp .env.example .env
+
+          # Generate application key
+          php artisan key:generate
+
+          # Run migrations
           php artisan migrate --force
 
-    - name: Clear Cache
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.AWS_SSH_KEY }}
-        script: |
-          cd /var/www/laravel
+          # Clear and cache configurations
           php artisan config:cache
           php artisan route:cache
           php artisan view:cache
+
+          # Set permissions
+          sudo chown -R www-data:www-data /var/www/laravel
+          sudo chmod -R 755 /var/www/laravel
+          sudo chmod -R 775 /var/www/laravel/storage /var/www/laravel/bootstrap/cache
