@@ -57,7 +57,7 @@
 <div class="py-5"></div>
 
 @yield('content')
-
+<h1>Ha Ha Ha CICD</h1>
 <div class="py-4 text-light text-center bg-primary">
     &copy; {{date("Y")}} Hlwan. All rights Reversed.
 </div>
