@@ -33,6 +33,10 @@ jobs:
         key: ${{ secrets.AWS_SSH_KEY }}
         script: |
           cd /var/www/laravel
+          # Set ownership and permissions
+          sudo chown -R ubuntu:www-data /var/www/laravel
+          sudo chmod -R 775 /var/www/laravel
+          sudo chmod 755 /var/www
 
           # Install Composer dependencies
           composer install --no-dev --optimize-autoloader
@@ -79,7 +83,7 @@ jobs:
           php artisan view:cache
 
           # Set permissions
-          sudo chown -R www-data:www-data /var/www/laravel
-          sudo chmod -R 755 /var/www/laravel
-          sudo chmod -R 775 /var/www/laravel/storage /var/www/laravel/bootstrap/cache
+          #sudo chown -R www-data:www-data /var/www/laravel
+          #sudo chmod -R 755 /var/www/laravel
+          #sudo chmod -R 775 /var/www/laravel/storage /var/www/laravel/bootstrap/cache
           #testagain
