@@ -1,41 +1,48 @@
-name: Deploy Laravel to AWS EC2
+name: Deploy Laravel to EC2
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: composer install --no-dev --prefer-dist --optimize-autoloader
+    - name: Install Composer Dependencies
+      run: composer install --no-dev --optimize-autoloader
 
-      - name: Upload files to EC2
-        uses: appleboy/scp-action@v0.1.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          source: "."
-          target: "/var/www/laravel"
+    - name: Upload to EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.AWS_SSH_KEY }}
+        source: "."
+        target: "/var/www/laravel"
 
-      - name: Run deployment commands
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd /var/www/laravel
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
-            sudo chown -R www-data:www-data /var/www/laravel/storage
-            sudo chown -R www-data:www-data /var/www/laravel/bootstrap/cache
-            sudo systemctl restart nginx
+    - name: Run Migrations
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.AWS_SSH_KEY }}
+        script: |
+          cd /var/www/laravel
+          php artisan migrate --force
+
+    - name: Clear Cache
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.AWS_SSH_KEY }}
+        script: |
+          cd /var/www/laravel
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
